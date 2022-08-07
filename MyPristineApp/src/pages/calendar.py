@@ -100,14 +100,14 @@ def display_color(position, income_switcher):
         # Linechart
         df_pivot2 = df_temp.pivot_table(index="date", values="action", aggfunc="sum").reset_index()
         #df_pivot2['year'] =  pd.to_datetime(df_pivot2['date']).dt.year
-        fig = px.line(df_pivot2, x="date", y="action")
+        fig = px.line(df_pivot2, x="date", y="action", labels={'action':'No. of Intakes', 'date': 'Date'})
         
     else:
         # Pivot
         cats = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         df_pivot = df_temp.pivot_table(index="day_of_week",columns="hours",values="action", aggfunc="sum").reindex(cats)
         # Heatmap
-        fig = px.imshow(df_pivot, text_auto=True)
-        
+        fig = px.imshow(df_pivot, text_auto=True, labels=dict(x= 'Hours', y = 'Day of Week',color="Intakes/Out-takes"))
+
         
     return fig, mode
