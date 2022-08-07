@@ -38,8 +38,13 @@ layout = html.Div(
      html.P('Graph takes a second to load!!!', style={'textAlign': 'center'}),
      
      
-    html.P('Choose an X variable:'),
-    dcc.Dropdown(['age_upon_intake_age_group', 'animal_type', 'intake_type', 'intake_condition', 'sex_upon_intake'], 'animal_type', id='y-dropdown'),
+    html.P("Choose an 'x' Variable:"),
+    dcc.Dropdown([{'label': 'Age Group Upon Intake', 'value': 'age_upon_intake_age_group'},
+                {'label': 'Animal Type', 'value': 'animal_type'},
+                {'label': 'Intake Type', 'value': 'intake_type'},
+                {'label': 'Intake Condition', 'value': 'intake_condition'},
+                {'label': 'Sex Upon Intake', 'value': 'sex_upon_intake'}
+            ],'animal_type', id='y-dropdown'),
     dcc.Graph(id="histograms-graph"),
     ]
 )
@@ -51,5 +56,8 @@ layout = html.Div(
 )
 def display_color(category):
     order = df.groupby(by = category, level=0).mean().sort_values(by='time_in_shelter_days',ascending=False).index.to_list()
-    fig = px.violin(df, y="time_in_shelter_days", points='all', box=True, x = category, category_orders={category: order})
+    fig = px.violin(df, y="time_in_shelter_days", points='all', box=True, x = category, category_orders={category: order},
+                    labels={'animal_type':'Animal Type', 'time_in_shelter_days': 'Time in Shelter (in Days)',
+                            'age_upon_intake_age_group':'Age Group Upon Intake', 'intake_type':'Intake Type',
+                            'intake_condition': 'Intake Condition', 'sex_upon_intake': 'Sex Upon Intake'})
     return fig

@@ -100,10 +100,14 @@ card3 = dbc.CardGroup(
 )
 
 
-animal_type_pie = px.pie(df['animal_type'].value_counts().reset_index(), values='animal_type', names='index', title='Animals Received')
+
+animal_type_pie = px.pie(df['animal_type'].value_counts().reset_index(), values='animal_type', names='index', title='Animals Received', 
+                         labels={'index':'Animal', 'animal_type': 'Animals Recieved'})
 outcomes = df['outcome_type'].value_counts().reset_index()
-outcome_bar = px.bar(df['outcome_type'].value_counts().reset_index().sort_values(by = 'outcome_type', ascending=True), x='outcome_type', y='index')
-age_histogram = px.scatter(df, x="age_upon_intake_(years)", y="time_in_shelter_days", color="animal_type")
+outcome_bar = px.bar(df['outcome_type'].value_counts().reset_index().sort_values(by = 'outcome_type', ascending=True), x='outcome_type', y='index',
+                     title='Outcome Type', labels={'outcome_type':'Numbers Of Outcome', 'index':'Outcome Type'})
+age_histogram = px.scatter(df, x="age_upon_intake_(years)", y="time_in_shelter_days", color="animal_type", title='Age Histogram',
+                           labels={'age_upon_intake_(years)':'Age Upon Intake (in Years)', 'time_in_shelter_days':'Time in Shelter (in Days)', 'animal_type':'Animals Category'})
 
 
 
@@ -134,7 +138,7 @@ layout = html.Div(
             ),
         
         
-        html.P("Future Additions to Project: Add Favicon logo, give an estimators till adopted prediction model, make the axis/column names cleaner and more intuitive, add more pages"),
+        html.P("Future Additions to Project: Add Favicon logo, give an estimators till adopted prediction model and, add more pages"),
         html.H2('Produly made with Dash from plotly'),
         html.Div(
             html.Img(src="https://images.prismic.io/plotly-marketing-website/b91638ab-80b7-446d-8a83-b6d911bd1519_Plotly_logo.png?auto=compress,format",
